@@ -13,27 +13,43 @@ require('dotenv').config();
  })
 
  app.use(express.json());
+
+
+
  const dataSchema = new mongoose.Schema({
     name : {
         required : true,
         type : String
     }
  })
-const data = mongoose.model('data' , dataSchema)
+ 
+ const data = mongoose.model('data' , dataSchema)
+
 app.post('/post' , async(req,res) =>{
-   // res.send('post api')
-   const data = new Model ({
+   //res.send('post api')
+  
+  const Data = new data ({
     name : req.body.name
    })
    try {
-    const dataToSave = await data.save();
+    const dataToSave = await Data.save();
     res.status(200).json(dataToSave)
    }
    catch(error){
     res.status(400).json({message : error.message})
    }
+  
 })
 
+app.get('/getAll' , async(req,res)=>{
+   try{
+      const Data = await data.find();
+      res.json(Data)
+  }
+  catch(error){
+      res.status(500).json({message: error.message})
+  }
+})
 
  app.listen(3000,() =>{
     console.log(`server connected at ${3000}`)
