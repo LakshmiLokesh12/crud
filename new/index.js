@@ -1,9 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
+require('dotenv').config();
  const mongoString = process.env.DATABASE_URL
  mongoose.connect(mongoString);
- const database = mongoose.connectiondatabase.on('error' , (error)=>{
+ const database = mongoose.connection
+ database.on('error' , (error)=>{
     console.log(error)
  })
  database.once('connected',() =>{
@@ -17,7 +19,7 @@ const app = express();
         type : String
     }
  })
-const user = mongoose.model('data' , dataSchema)
+const data = mongoose.model('data' , dataSchema)
 app.post('/post' , async(req,res) =>{
    // res.send('post api')
    const data = new Model ({
@@ -31,6 +33,14 @@ app.post('/post' , async(req,res) =>{
     res.status(400).json({message : error.message})
    }
 })
+
+
  app.listen(3000,() =>{
     console.log(`server connected at ${3000}`)
  })
+/**
+ * vms app
+ * host 121.0.4.9 port 8080
+ * create post 121.0.4.9: 8080/vms/vehicles
+ * 
+ */
